@@ -1,0 +1,25 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button (click)="back()"> <ion-icon name="chevron-back"></ion-icon> </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button></ion-button>
+  </ion-buttons>
+  <ion-title style="text-align: center">Favoritos</ion-title>
+</ion-toolbar>
+
+<ion-content fullscreen>
+  <ion-list>
+    <ion-list-header> Comercios favoritos</ion-list-header>
+    <ion-item *ngFor="let commerce of this.favorites" (click)="goCommerce(commerce)">
+      <ion-avatar slot="start" >
+        <img src="{{baseUrlForImage + commerce?.logo}}"/>
+      </ion-avatar>
+      <ion-label>
+        <h2> {{ commerce?.name }} </h2>
+        <h3></h3>
+        <p>{{commerce?.description}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button (click)="back()"> <ion-icon name="chevron-back"></ion-icon> </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button></ion-button>
+  </ion-buttons>
+  <ion-title style="text-align: center">Historico de pagos</ion-title>
+</ion-toolbar>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form (ngSubmit)="getPayment(fSearch)" #fSearch="ngForm">
+          <ion-list>
+            <ion-input class="input"
+                       style="margin-top: 10px;"
+                       name="document"
+                       [(ngModel)]="document"
+                       required
+                       placeholder="Ingrese el documento">
+            </ion-input>
+            <ion-button class="submit-button" expand="block" type="submit">Consultar</ion-button>
+          </ion-list>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="payments?.length > 0">
+    <ion-list-header>Pagos</ion-list-header>
+    <ion-item *ngFor="let payment of this.payments">
+      <ion-label>
+        <h2>Referencia: {{payment.reference}}</h2>
+        <h3>Total: {{payment.total}}</h3>
+        <p>Estado: <ion-badge color="medium">{{payment.status}}</ion-badge></p>
+        <p>Fecha: {{payment.createdAt}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="this.user">
+  <ion-button expand="block" (click)="getPaymentByDocument()" >
+    Desea consultar con su documento
+  </ion-button>
+</ion-footer>

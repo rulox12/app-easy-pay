@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true">
+  <ion-header mode="ios">
+    <ion-toolbar>
+      <ion-button slot="start" fill="solid" class="button-back" (click)="back()">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+      <ion-title>Consulta de Facturas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+      </ion-col>
+      <ion-col size="6" class="ion-text-end">
+
+      </ion-col>
+    </ion-row>
+    <ion-list *ngIf="paymentGenerate === null">
+      <ion-list-header>
+        <h2>Facturas por pagar</h2>
+      </ion-list-header>
+      <ion-item lines="none" *ngFor="let item of this.bills">
+        <ion-icon slot="start" name="cash" color="primary"></ion-icon>
+        <ion-label size="large" class="ion-text-wrap">
+          <b>{{item.description + ' - ' + item.reference }}</b>
+          <p>
+            {{item?.total}}
+          </p>
+        </ion-label>
+        <ion-button class="make-payment-button" slot="end" (click)="makePayment(item)" size="large">Pagar</ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="paymentGenerate !== null">
+      <ion-list-header>
+        <h2>Informacion de pago</h2>
+      </ion-list-header>
+      <ion-item>
+        Referencia: {{paymentGenerate.payment.reference}}
+      </ion-item>
+      <ion-item>
+        Estado: {{paymentGenerate.payment.status}}
+      </ion-item>
+      <ion-item>
+        Valor: {{paymentGenerate.payment.total}}
+      </ion-item>
+      <ion-button class="submit-button" expand="block" type="submit" (click)="refreshPayment()">Actualizar estado del pago</ion-button>
+    </ion-list>
+  </ion-grid>
+</ion-content>

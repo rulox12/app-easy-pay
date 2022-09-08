@@ -1,0 +1,11 @@
+{
+  "appId": "seda.easypay.wwww",
+  "appName": "easy-pay",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

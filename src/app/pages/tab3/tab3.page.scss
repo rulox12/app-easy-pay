@@ -1,0 +1,25 @@
+ion-button {
+  font-weight: bold;
+  text-transform: none;
+}
+
+.content-user-not-exist {
+  position: relative;
+  top: 30%;
+}
+
+ion-label {
+  color: #565656 !important;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+
+
+ion-content {
+  .main-header {
+    background: rgb(255, 202, 103);
+    box-shadow: 0 1px 10px var(--ion-color-light);
+
+  }
+}

@@ -1,0 +1,6 @@
+{
+	"appId": "seda.easypay.wwww",
+	"appName": "easy-pay",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

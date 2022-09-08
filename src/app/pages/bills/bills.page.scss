@@ -1,0 +1,39 @@
+ion-header {
+  ion-toolbar {
+    --background: transparent;
+    --border-style: none;
+    padding: 0 15px;
+    ion-button {
+      --background-activated: #e1e1e1;
+      --padding-top: 0;
+      --padding-bottom: 0;
+      --padding-start: 0;
+      --padding-end: 0;
+      &.button-back {
+        --border-radius: 20px;
+        --background: #fff;
+      }
+      &.button-edit {
+        --border-radius: 10px;
+        --background: #e4e4f2;
+      }
+      ion-icon {
+        color: #6058d7;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.make-payment-button{
+  --border-radius: 50px;
+  --color: #fff;
+  --background: #6058d7;
+}
+
+.submit-button {
+  --border-radius: 50px;
+  --color: #fff;
+  --background: #6058d7;
+}
+

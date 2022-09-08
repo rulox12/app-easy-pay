@@ -1,0 +1,30 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button (click)="back()"> <ion-icon name="chevron-back"></ion-icon> </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button></ion-button>
+  </ion-buttons>
+  <ion-title style="text-align: center">Crear usuario</ion-title>
+</ion-toolbar>
+<ion-content>
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <ion-list style="padding: 20px">
+      <ion-input class="input" formControlName="name" placeholder="Nombre"></ion-input>
+      <ion-input class="input" formControlName="surname" placeholder="Apellido"></ion-input>
+      <ion-input class="input" formControlName="phone" placeholder="Celular" type="number"></ion-input>
+      <ion-select formControlName="documentType" placeholder="Seleccione un documento" interface="action-sheet" class="input">
+        <ion-select-option value="CC">Cedula de ciudadania</ion-select-option>
+        <ion-select-option value="CE">Cedula de extrangeria</ion-select-option>
+      </ion-select>
+      <ion-input class="input" formControlName="document" placeholder="Documento" type="number"></ion-input>
+      <ion-input class="input" formControlName="email" placeholder="Correo" type="email"></ion-input>
+      <ion-input class="input" formControlName="password" placeholder="Contraseña" type="password"></ion-input>
+      <div class="ion-text-center" style="margin-top: 10px">
+        <ion-button size="block" type="submit" color="tertiary" style="border-radius: 20px">Crear</ion-button>
+      </div>
+    </ion-list>
+  </form>
+  <ion-footer class="ion-no-border">
+  </ion-footer>
+</ion-content>

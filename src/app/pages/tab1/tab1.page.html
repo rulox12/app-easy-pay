@@ -1,0 +1,129 @@
+<ion-header class="ion-no-border">
+  <ion-item lines="none">
+    <ion-searchbar placeholder="Buscar el comercio" (ionChange)="search($event)"></ion-searchbar>
+  </ion-item>
+</ion-header>
+
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Start Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-grid>
+    <div class="event-slider">
+      <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }" class="default-left-padding">
+        <ion-slide>
+          <ion-col class="ion-text-left">
+            <ion-card>
+              <ion-card-header class="ion-no-padding">
+                <img src="../../assets/events/event1.svg" />
+              </ion-card-header>
+
+              <ion-card-content>
+                <p class="date">17th July, 2021</p>
+                <h2 class="eventname">International Jazz Festival</h2>
+                <p class="location"><ion-icon name="location"></ion-icon>Caracas, Venezuela</p>
+
+                <div class="additional-info">
+                  <div class="attendees">
+                    <img src="../../assets/persons/person1.svg" />
+                    <img src="../../assets/persons/person2.svg" />
+                    <img src="../../assets/persons/person3.svg" />
+                    <img src="../../assets/persons/person4.svg" />
+                    <div class="count">
+                      <img src="../../assets/persons/person-placeholder.svg" />
+
+                      <p>+7</p>
+                    </div>
+                  </div>
+
+                  <p class="time">10:00pm</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-slide>
+        <ion-slide>
+          <ion-col class="ion-text-left">
+            <ion-card>
+              <ion-card-header class="ion-no-padding">
+                <img src="../../assets/events/event2.svg" />
+              </ion-card-header>
+
+              <ion-card-content>
+                <p class="date">23th July, 2021</p>
+                <h2 class="eventname">Contemporary Dance</h2>
+                <p class="location"><ion-icon name="location"></ion-icon>Caracas, Venezuela</p>
+
+                <div class="additional-info">
+                  <div class="attendees">
+                    <img src="../../assets/persons/person1.svg" />
+                    <img src="../../assets/persons/person2.svg" />
+                    <img src="../../assets/persons/person3.svg" />
+                    <img src="../../assets/persons/person4.svg" />
+                    <div class="count">
+                      <img src="../../assets/persons/person-placeholder.svg" />
+
+                      <p>+3</p>
+                    </div>
+                  </div>
+
+                  <p class="time">10:00pm</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <ion-card>
+      <ion-item class="ion-text-center">
+        <ion-label style="font-size: 17px; color: #1e1e1e">¡ Crea una cuenta y mejore tu experiencia !</ion-label>
+      </ion-item>
+
+      <ion-card-content>
+        <ion-button expand="block">Crear cuenta</ion-button>
+        <ion-button expand="block" fill="clear">Ingresar a mi cuenta</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-row class="ion-margin-horizontal ion-margin-top">
+        <h1>Comercios</h1>
+      </ion-row>
+      <ion-row class="ion-margin-horizontal" *ngIf="this.commerces">
+        <ion-col *ngFor="let commerce of this.commerces | filterCommerces: searchText " size="6">
+          <ion-card class="ion-text-center item-cart" (click)="goCommerce(commerce)"
+                    style="background-color: {{commerce.color}} ">
+            <ion-card-header>
+              <div align="center">
+                <ion-thumbnail style="background-color: white">
+                  <img [src]="baseUrlForImage + commerce?.logo"/>
+                </ion-thumbnail>
+              </div>
+            </ion-card-header>
+            <ion-card-content
+              style="padding: 0px; white-space: nowrap;text-overflow: ellipsis; overflow: hidden; color: white ; font-weight: bold">
+              {{ commerce?.name }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+  </ion-grid>
+</ion-content>
+

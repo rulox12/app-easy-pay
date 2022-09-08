@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">easy-pay</string>
+    <string name="title_activity_main">easy-pay</string>
+    <string name="package_name">seda.easypay.wwww</string>
+    <string name="custom_url_scheme">seda.easypay.wwww</string>
+</resources>
