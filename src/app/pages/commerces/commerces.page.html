@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
   <ion-header mode="ios">
     <ion-toolbar>
-      <ion-button slot="start" fill="solid" class="button-back" (click)="back()">
-        <ion-icon name="chevron-back"></ion-icon>
+      <ion-button slot="start"  class="button-back" (click)="back()">
+        <ion-icon name="chevron-back" color="primary"></ion-icon>
       </ion-button>
       <ion-buttons slot="end" *ngIf="this.user && !this.favorite">
         <ion-button (click)="addFavorite()">
@@ -19,9 +19,9 @@
   </ion-header>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col style="text-align: center !important;">
         <ion-text color="dark">
-          <h1 style="font-weight: bold; text-align: center">{{commerce?.name}}</h1>
+          <img [src]="baseUrlForImage + commerce?.logo" style="max-width: 100px; max-height: 100px" />
         </ion-text>
       </ion-col>
     </ion-row>

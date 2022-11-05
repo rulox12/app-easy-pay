@@ -13,9 +13,10 @@
 }
 
 .submit-button {
-  --border-radius: 50px;
-  --color: #fff;
-  --background: #6058d7;
+  text-transform: none;
+  font-size: 17px;
+  font-weight: bold;
+  border-radius: 20px !important;
 }
 
 ion-header {
@@ -38,7 +39,6 @@ ion-header {
         --background: #e4e4f2;
       }
       ion-icon {
-        color: #6058d7;
         font-size: 1.2rem;
       }
     }

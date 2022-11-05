@@ -32,7 +32,15 @@
       <ion-label>
         <h2>Referencia: {{payment.reference}}</h2>
         <h3>Total: {{payment.total}}</h3>
-        <p>Estado: <ion-badge color="medium">{{payment.status}}</ion-badge></p>
+        <p>Estado:
+          <ion-badge color="warning" *ngIf="payment.status === 'Pending' ">{{payment.status}}</ion-badge>
+          <ion-badge color="success" *ngIf="payment.status === 'APPROVED' ">{{payment.status}}</ion-badge>
+          <ion-badge color="danger" *ngIf="payment.status === 'DECLINED' ">{{payment.status}}</ion-badge>
+        </p>
+        <p *ngIf="payment.status === 'DECLINED' ">Razón:
+          {{payment.description}}
+        </p>
+        <p>Descripción: {{payment.bill.description}}</p>
         <p>Fecha: {{payment.createdAt}}</p>
       </ion-label>
     </ion-item>

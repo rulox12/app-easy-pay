@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CommercesService} from '../../services/commerces.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {StorageHelper} from '../../helpers/storage.helper';
 import {BillService} from '../../services/bill.service';
 import {FavoriteService} from '../../services/favorite.service';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-commerces',
@@ -17,35 +18,53 @@ export class CommercesPage implements OnInit {
   commerce: any;
   user: any;
   favorite = false;
+  public baseUrlForImage = environment.api + 'commerce/getImage/';
 
   constructor(
     private commerceService: CommercesService,
     private billService: BillService,
     private favoriteService: FavoriteService,
+    private activeRoute: ActivatedRoute,
     private route: Router,
     private storageHelper: StorageHelper,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingCtrl: LoadingController
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando',
+      duration: 2000,
+      spinner: 'circles',
+    });
+
+    loading.present();
+
     this.storageHelper.get('user').then(user => {
       if (user) {
         this.user = user;
       }
     });
-    this.storageHelper.get('commerce').then(response => {
-      this.commerce = response;
-      if (this.user && this.commerce) {
-        this.favoriteService.existFavorite({
-          // eslint-disable-next-line no-underscore-dangle
-          user: this.user._id,
-          // eslint-disable-next-line no-underscore-dangle
-          commerce: this.commerce._id
-        }).subscribe(responseCommerce => {
-          this.favorite = responseCommerce.exist;
+    this.activeRoute.params.subscribe(params => {
+      if (params.id) {
+        this.commerceService.getCommerce(params.id).then(response => {
+          if (response) {
+            this.commerce = response;
+            if (this.user && this.commerce) {
+              this.favoriteService.existFavorite({
+                // eslint-disable-next-line no-underscore-dangle
+                user: this.user._id,
+                // eslint-disable-next-line no-underscore-dangle
+                commerce: this.commerce._id
+              }).subscribe(responseCommerce => {
+                this.favorite = responseCommerce.exist;
+              });
+            }
+          }
         });
       }
+
     });
   }
 
@@ -54,10 +73,8 @@ export class CommercesPage implements OnInit {
       if (this.document) {
         // eslint-disable-next-line no-underscore-dangle
         this.billService.getBillsForDocument(this.commerce._id, this.document).then(response => {
-          this.storageHelper.set('bills', response);
-          this.route.navigate(['/bills']).then(() => {
-            window.location.reload();
-          });
+          // eslint-disable-next-line no-underscore-dangle
+          this.route.navigate(['/bills', {commerce: this.commerce._id, document: this.document}]);
         });
       }
     });

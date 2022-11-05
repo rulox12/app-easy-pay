@@ -19,15 +19,62 @@
       <ion-list-header>
         <h2>Facturas por pagar</h2>
       </ion-list-header>
-      <ion-item lines="none" *ngFor="let item of this.bills">
+      <ion-item lines="none" *ngFor="let bill of this.bills">
         <ion-icon slot="start" name="cash" color="primary"></ion-icon>
         <ion-label size="large" class="ion-text-wrap">
-          <b>{{item.description + ' - ' + item.reference }}</b>
+          <b>{{bill.description + ' - ' + bill.reference }}</b>
           <p>
-            {{item?.total}}
+            {{bill?.total}}
           </p>
         </ion-label>
-        <ion-button class="make-payment-button" slot="end" (click)="makePayment(item)" size="large">Pagar</ion-button>
+        <ion-button *ngIf="bill.status === 'Pending' " class="make-payment-button" slot="end" (click)="makePayment(bill)">Pagar</ion-button>
+        <ion-button *ngIf="bill.status !== 'Pending' " class="more-information-button" slot="end" id="open-modal-{{bill._id}}" (click)="moreInformation(bill)">Mas Informacion</ion-button>
+        <ion-modal trigger="open-modal-{{bill._id}}" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Información del pago </ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="cancel()">Cerrar</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <ion-list>
+                <ion-item>
+                  <ion-label>
+                    <h2>Referencia:</h2>
+                    <p>{{this.billSelected?.reference}}</p>
+                  </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>
+                    <h2>Descripción:</h2>
+                    <p>{{this.billSelected?.description}}</p>
+                  </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>
+                    <h2>Total:</h2>
+                    <p>{{this.billSelected?.total}}</p>
+                  </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>
+                    <h2>Estado:</h2>
+                    <p>{{this.billSelected?.status}}</p>
+                  </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label>
+                    <h2>Documento:</h2>
+                    <p>{{this.billSelected?.document}}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
       </ion-item>
     </ion-list>
     <ion-list *ngIf="paymentGenerate !== null">

@@ -41,10 +41,7 @@ export class FavoritesPage implements OnInit {
   }
 
   goCommerce(commerce) {
-    this.storageHelper.set('commerce', commerce);
     // eslint-disable-next-line no-underscore-dangle
-    this.route.navigate(['/commerces']).then(() =>{
-      window.location.reload();
-    });
+    this.route.navigate(['/commerces', {id: commerce._id}]);
   }
 }

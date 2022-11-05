@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {StorageHelper} from '../../helpers/storage.helper';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PaymentService} from '../../services/payment.service';
 import {environment} from '../../../environments/environment';
+import {BillService} from '../../services/bill.service';
+import {LoadingController} from '@ionic/angular';
+import {IonModal} from '@ionic/angular';
+import {OverlayEventDetail} from '@ionic/core/components';
 
 @Component({
   selector: 'app-bills',
@@ -10,26 +14,42 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./bills.page.scss'],
 })
 export class BillsPage implements OnInit {
+  @ViewChild(IonModal) modal: IonModal;
 
   bills: any;
+  billSelected= null;
   urlFrontend = environment.urlFrontend;
   paymentGenerate = null;
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name: string;
 
   constructor(
     private storageHelper: StorageHelper,
     private paymentService: PaymentService,
-    private route: Router
+    private route: Router,
+    private billService: BillService,
+    private activateRouter: ActivatedRoute,
+    private loadingCtrl: LoadingController
   ) {
   }
 
-  ngOnInit() {
-    this.storageHelper.get('bills').then(response => {
-      this.bills = response;
+  async ngOnInit() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando',
+      duration: 1200,
+      spinner: 'circles',
+    });
+
+    loading.present();
+    this.activateRouter.params.subscribe(params => {
+      this.billService.getBillsForDocument(params.commerce, params.document).then(response => {
+        this.bills = response;
+      });
     });
   }
 
   back() {
-    this.route.navigate(['/commerces']);
+    this.route.navigate(['/tabs/tab1']);
   }
 
   makePayment(item) {
@@ -57,7 +77,6 @@ export class BillsPage implements OnInit {
   }
 
   refreshPayment() {
-    console.log(this.paymentGenerate.payment);
     // eslint-disable-next-line no-underscore-dangle
     this.paymentService.getPaymentByReference(this.paymentGenerate.payment._id).then(response => {
       if (response) {
@@ -69,5 +88,24 @@ export class BillsPage implements OnInit {
     }).then(response => {
       console.log('hola');
     });
+  }
+
+  moreInformation(item) {
+    this.billSelected =  item;
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.name, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
+    }
   }
 }

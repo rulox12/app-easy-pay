@@ -19,7 +19,6 @@ export class BillService {
   }
 
   getBillsForDocument(idCommerce: string, document: string) {
-    console.log(document, idCommerce);
     return new Promise<any>(resolve => {
       this.tokenHelper.getToken().then(token => {
         if (token && typeof token === 'string') {
@@ -29,13 +28,12 @@ export class BillService {
           });
           this.http.get<any>(this.url + 'bill/bill-by-user-commerce/' + document + '/' + idCommerce).subscribe(response => {
             if (response) {
-              console.log('holar', response);
               resolve(response);
             } else {
               resolve(false);
             }
           }, error => {
-            this.presentAlert(error.error.message).then();
+            this.presentAlert('No se encontraron facturas').then();
           });
         }
       });
@@ -44,7 +42,6 @@ export class BillService {
 
   async presentAlert(message) {
     const alert = await this.alertController.create({
-      header: 'Opss',
       message,
       buttons: ['OK']
     });

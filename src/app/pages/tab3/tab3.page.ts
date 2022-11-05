@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {StorageHelper} from '../../helpers/storage.helper';
 import {Router} from '@angular/router';
+import {error} from "protractor";
+import {NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-tab3',
@@ -19,10 +21,13 @@ export class Tab3Page implements OnInit {
 
   ngOnInit(): void {
     this.storageHelper.get('user').then(user => {
+      console.log('hola', user);
       if (user) {
         this.user = user;
         this.existUser = true;
       }
+    }, async err => {
+      console.log('hola2', err);
     });
   }
 

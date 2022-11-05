@@ -31,9 +31,31 @@ export class CommercesService {
             } else {
               resolve(false);
             }
-          },error => {
+          }, error => {
             console.log(headers);
             console.log(error);
+          });
+        }
+      });
+    });
+  }
+
+  getCommerce(id: string) {
+    return new Promise<any>(resolve => {
+      this.tokenHelper.getToken().then(token => {
+        if (token && typeof token === 'string') {
+          const headers = new HttpHeaders({
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            Authorization: token
+          });
+          this.http.get(this.url + 'commerce/get-commerce/' + id, {headers}).subscribe(response => {
+            if (response) {
+              resolve(response);
+            } else {
+              resolve(false);
+            }
+          }, error => {
+            resolve(false);
           });
         }
       });

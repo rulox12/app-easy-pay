@@ -15,18 +15,24 @@ export class Tab1Page implements OnInit {
   item = {id: 1, name: 'Top Up', src: 'assets/icons/top-up.png', background: 'rgba(27,150,181, 0.1)', page: ''};
   searchText: any;
   public baseUrlForImage = environment.api + 'commerce/getImage/';
+  existUser = false;
 
   constructor(
     private commerceService: CommercesService,
     private router: Router,
     private storageHelper: StorageHelper,
-    private menu: MenuController
+    private menu: MenuController,
   ) {
   }
 
   async ngOnInit() {
     this.commerceService.getAllCommerces().then(response => {
       this.commerces = response;
+    });
+    this.storageHelper.get('user').then(response => {
+      if (!(response === null)) {
+        this.existUser = true;
+      }
     });
   }
 
@@ -43,14 +49,15 @@ export class Tab1Page implements OnInit {
   }
 
   goCommerce(commerce) {
-    this.storageHelper.set('commerce', commerce);
     // eslint-disable-next-line no-underscore-dangle
-    this.router.navigate(['/commerces']).then(() =>{
-      window.location.reload();
-    });
+    this.router.navigate(['/commerces', {id: commerce._id}]);
   }
 
   search(event) {
     this.searchText = event.detail.value;
+  }
+
+  go(path: string) {
+    this.router.navigate([path]);
   }
 }

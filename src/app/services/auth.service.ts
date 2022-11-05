@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {TokenHelper} from '../helpers/token.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,9 @@ import {HttpClient} from '@angular/common/http';
 export class AuthService {
   public url = environment.api;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+  ) {
   }
 
   signIn(request?) {
@@ -20,10 +23,11 @@ export class AuthService {
   }
 
   updateUser(request, id?) {
-    return this.http.put<any>(this.url + 'user/update-user/'+ id, request);
+    return this.http.put<any>(this.url + 'user/update-user/' + id, request);
   }
 
   changePassword(request, id: any) {
-    return this.http.put<any>(this.url + 'user/update-user-password/'+ id, request);
+    return this.http.put<any>(this.url + 'user/update-user-password/' + id, request);
   }
+
 }

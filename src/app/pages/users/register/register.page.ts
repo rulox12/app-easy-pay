@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {UserService} from '../../../services/user.service';
+import {LoadingController} from '@ionic/angular';
+import {StorageHelper} from '../../../helpers/storage.helper';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +16,10 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: Router
+    private userService: UserService,
+    private loadingController: LoadingController,
+    private route: Router,
+    private storageHelper: StorageHelper
   ) {
   }
 
@@ -31,8 +37,29 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  submitForm() {
-    console.log(this.userForm);
+  async submitForm() {
+    if (this.userForm.valid) {
+      const loading = await this.loadingController.create({
+        message: 'Cargando',
+        spinner: 'circles',
+      });
+      loading.present();
+      this.userService.singUp(this.userForm.value).then(async (response) => {
+        if (response) {
+          this.storageHelper.set('user', response.user);
+          setTimeout(() => {
+            loading.dismiss();
+            this.route.navigate(['/tabs/tab1', {id: 1}]).then(() => {
+              window.location.reload();
+            });
+          }, 2000);
+
+        }
+        console.log(response);
+      });
+    } else {
+
+    }
   }
 
   back() {

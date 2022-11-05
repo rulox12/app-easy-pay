@@ -26,9 +26,15 @@ ion-header {
 }
 
 .make-payment-button{
-  --border-radius: 50px;
+  --border-radius: 10px;
   --color: #fff;
   --background: #6058d7;
+}
+
+.more-information-button{
+  --border-radius: 10px;
+  --color: #fff;
+  --background: #79cb79;
 }
 
 .submit-button {
